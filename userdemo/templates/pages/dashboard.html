@@ -1,0 +1,222 @@
+{% extends 'pages/base.html' %}
+{% block content %}
+    <style>
+        .outer-container{
+            background-color:whitesmoke;
+            margin: 20px auto;
+        }
+        .right-container{
+            margin: 20px auto;
+
+        }
+        .bordered-container{
+            border: 1px solid lightslategrey;
+            margin: 10px 25px 10px 5px;
+        }
+        .bordered-container h4,.bordered-container h5{
+            margin: 5px 10px 10px 10px;
+        }
+        .table{
+            text-align: center;
+        }
+        .profile img{
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 50%;
+            margin: 10px 20px 5px 40px ;
+        }
+        .profile-div{
+            margin: 20px auto;
+            position: fixed;
+        }
+        .text-field{
+            margin: 10px 10px 10px 15px;
+        }
+        .profile-btn{
+            margin: 10px 15pc 10px 30px;
+        }
+        .center-header-title{
+            margin: 5px 10px 5px 20px;
+        }
+        .card-body h4{
+            margin: 10px 40% 10px 40%;
+            color: white;
+        }
+        .card-header{
+            color: white;
+        }
+        .btn-class{
+            margin: 5px 40% 10px 50%;
+        }
+    </style>
+    <div class="container outer-container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="container profile-div">
+                    <div class="profile">
+                        <img src="{{user_details.profile_pic.url}}">
+                    </div>
+                    
+                    <div class="profile-info">
+                        <h5 class="text-field">Hello <strong>{{user_details.first_name}} {{user_details.last_name}}</strong></h5>
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-btn">
+                            <a href="{% url 'user_profile' %}">
+                                <button class="btn btn-primary">Profile Page</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 ">
+                <div class="container row">
+                    <div class="col-lg-4" style="margin: 10px 0 0 0;">
+                        <div class="card text-dark bg-primary mb-3">
+                            <div class="card-header">
+                                <h5 class="center-header-title">Meeting Request</h5>
+                            </div>
+                            <div class="card-body">
+                              <h4>{{no_request}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="margin: 10px 0 0 0;">
+                        <div class="card text-dark bg-info mb-3">
+                            <div class="card-header">
+                                <h5 class="center-header-title">Active Meeting</h5>
+                            </div>
+                            <div class="card-body">
+                                <h4>{{no_active_m}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="margin: 10px 0 0 0;">
+                        <div class="card text-dark bg-success mb-3">
+                            <div class="card-header">
+                                <h5>Completed Meeting</h5>
+                            </div>
+                            <div class="card-body">
+                                <h4>{{no_completed_m}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="container right-container">
+                    <div class="bordered-container">
+                        <h4>Meeting Requests</h4>
+                        <div class="container row">
+                            <div class = "display-field" >
+                            
+                                {%if no_request == 0 %}
+                                    <h5 class="display-field-attrb">No meeting request found</h5>
+                                {% else %}
+                                    <table class="table table-hover mx-5 w-100">
+                                        <thead>
+                                            <tr>
+                                                <th>Subject</th>
+                                                <th>Date</th>
+                                                <th>Duration</th>
+                                                {% if user.is_tutor %}
+                                                    <th>Student</th>
+                                                {% else %}
+                                                    <th>Tutor</th>
+                                                {%endif%}
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for order in orders %}
+                                        
+                                        {% if order.status == 'pending' %}
+                                    
+                                        <tr>
+                                            <td>{{order.subject}}</td>
+                                            <td>{{order.apmnt_time}}</td>
+                                            <td>{{order.duration}}</td>
+                                            {% if user.is_tutor %}
+                                                <td>{{order.s_id}}</td>
+                                            {% else %}
+                                                <td>{{order.t_id}}</td>
+                                            {%endif%}
+                                            
+                                            <!-- <td><a href="#">{{order.username}}</a></td> -->
+                                            <td><a href="{% url 'request_profile' order.id %}">
+                                                <button class="btn btn-primary">View</button>
+                                            </td>
+                                        </tr>
+                                       
+                                        
+                                        {%endif%}
+                                        {%endfor%}
+                                        </tbody>
+                                    </table>
+                                    {%if o_count > 3 %}
+                                        <a href="{% url 'all_request' %}">
+                                            <button class="btn btn-primary btn-class">All Orders</button>
+                                        </a>
+                                    {%endif%}
+                                {%endif%}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bordered-container">
+                        <h4>List of Meetings</h4>
+                        <div class=" container row">
+                            <div class = "display-field">
+                            
+                                {%if no_active_m == 0 %}
+                                    <h5>No active meeting found</h5>
+                                {% else %}
+                                    
+                                    <table class="table table-hover mx-5 w-5" >
+                                        <thead>
+                                            <tr>
+                                                <th>Meeting id</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        {% for m in meetings %}
+                                            
+                                        {% if m.t_status == 'active' and m.s_status == 'active' %}
+                                        <tr>
+                                            <td>{{m.id}}</td>
+                                            <td>{{m.s_status}}</td>
+                                            
+                                            <td>
+                                                <a href="{% url 'meeting_view' m.id %}">
+                                                <button class="btn btn-primary">View</button>
+                                            </td>
+                                        </tr>
+                                        {%endif%}
+            
+                                        {%endfor%}
+                                    </table>
+                                    {%if m_count > 3 %}
+                                        <a href="{% url 'all_meeting' %}">
+                                            <button class="btn btn-primary btn-class">All Meetings</button>
+                                        </a>
+                                    {%endif%}
+                                {%endif%}
+                            </div>
+                        
+                        
+                        </div>
+
+                    </div>
+                    
+
+                   
+
+                   
+                 
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+{%endblock%}

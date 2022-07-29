@@ -1,0 +1,88 @@
+{% extends 'pages/base.html' %}
+{% load listindex %}
+
+{%block content %}
+<style>
+    .main-container{
+        margin: 30px auto;
+    }
+    .title-text{
+        margin: 10px 30% 30px 30%;
+        color: blue;
+    }
+    .print-btn{
+        margin: 10px 40% 10px 50%;
+        color: white;
+    }
+    .detail-page{
+        border: 1px solid gray;
+        max-width: 700px;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+    img{
+        max-width: 150px;
+        max-height: 150px;
+        border-radius:50%;
+        margin: 10px 20% 10px 20%;
+    }
+    .details{
+        margin-top: 5%;
+    }
+    .details h5{
+        margin: 5px 20% 5px 20%;
+    }
+</style>
+<div class="container passbook-container">
+    <div class="container detail-page">
+        <div class="container row">
+            <div class="col-sm-4" > 
+                <div class="profile-pic">
+                    <img src="{{user_details.profile_pic.url}}">
+                </div>
+            </div>
+            <div class="col-sm-8 details">
+                <div><h5>Name : <strong>{{customer.name}}</strong></h5></div>
+                <div><h5>A/c No. : <strong>{{customer.account_number}}</strong></h5></div>
+                <div><h5>Amount : <strong>{{customer.amount}}</strong></h5></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container main-container">
+    <h4 class="title-text">Your bank transaction history</h4>
+    <div class="container table-container">
+        
+        <table class="table table-hover mx-5 w-100">
+            <thead>
+                <tr>
+                    <th>Transaction Type</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for history in customer.history %}
+            
+            <tr>
+                <td>{{history|listindex:0}}</td>
+                <td>{{history|listindex:1}}</td>
+                <td>{{history|listindex:2}}</td>
+                <td>{{history|listindex:3}}</td>
+            
+            </tr>
+           
+            
+            {%endfor%}
+            </tbody>
+        </table>
+
+    </div>
+    <a href="javascript:window.print()">
+        <button class="btn btn-primary print-btn"  id="print-btn">Print</button>
+    </a>
+    </div>
+</div>
+
+{%endblock%}

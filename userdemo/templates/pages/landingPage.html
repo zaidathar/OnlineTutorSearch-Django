@@ -1,0 +1,84 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+{%block content %}
+    <style>
+        html , body{
+            height: 100%;
+        }
+        body{
+            
+        }
+        .div-bg-img{
+            background-image: url("{% static 'img/bookandbulb.jpg'%}");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            min-height: 600px;
+            min-width: 100%;
+            margin: 10px 0 0 0;
+
+        }
+        .content{
+            
+            margin: 20px 10% 20px 10%;
+        }
+        .content h4{
+            margin: 230px 10% 20px 10%;
+            color:olive;
+            font-size: 80px;
+            font-weight: 1000;
+        }
+        h5,p{
+            color:olivedrab;
+            font-size: 25px;
+            font-weight: 1000;
+            margin: 30px 30% 20px 15%;
+        }
+        .tutor-search{
+            background-color:palegoldenrod
+            width: 100%;
+            margin: 0;
+            
+        }
+        .tutuor-search-bg{
+            background-image: url("{% static 'img/tutor_Search.gif'%}");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            height: 400px;
+            width: 80%;
+            margin: 10px auto;
+
+        }
+        .msg-container{
+            margin-top: 0px;
+            background-color:gray;
+            height: 100px;
+        }
+        .text-main{
+            color: blueviolet;
+            margin: 30px auto 90px auto;
+            font-weight: 1000;
+        }
+    </style>
+   
+    <div class="container row div-bg-img">
+        <div class="container ">
+            <div class="container content">
+                <h4>Welcome to OTS</h4>
+                <h5>Search tutor and take private 1-on-1 lesson</h5>
+            </div>
+        
+        </div>
+        
+    </div>
+    
+    <div class="tutor-search">
+        <div>
+            <h3 class="text-center text-main">You can search tutor easily</h3>
+        </div>
+        <div class="container tutuor-search-bg">
+            <div class="container search-bg">
+                
+            </div>
+        </div>
+    </div>
+{%endblock%}

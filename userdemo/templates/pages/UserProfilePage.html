@@ -1,0 +1,99 @@
+{% extends "pages/base.html" %}
+{% load static %}
+{%block content %}
+    <style>
+        .wallet-btn button{
+            margin: 10px;
+            width: 110px;
+            
+        }
+        .profile-pic{
+            margin: 10px;
+        }
+        .profile-pic img{
+            border-radius: 50%;
+        }
+        .user-details{
+            margin: 15px;
+        }
+        .update-btn{
+            margin: 100px 30% 20px 50%;
+        }
+        .main-container{
+            margin: 20px auto;
+        }
+        .profile-container{
+            margin:20px auto;
+        }
+       
+    </style>
+    <div class="container main-container">
+        <div class="container row">
+            <div class="col-lg-7" >
+                <div class="container profile-pic">
+                    <div class="row">
+                        <div class="col-lg-5 profile-container">
+                            <img src="{{user.profile_pic.url}}" width="200px" height="200px">
+                    
+                        </div>
+                        <div class="col-lg-7 profile-container">
+                            <div class="user-details">
+                                <h4>{{user.first_name}}  {{user.last_name}}</h4>
+                                <h4>{{details.contact}}</h4>
+                                <h4>{{details.dob}}</h4>
+                                <h4>{{details.location}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container row">
+                        <div class="container col-lg-5 update-btn">
+                            <a href="{% url 'profile_update'%}">
+                                <button class="btn btn-primary">Update Profile</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="container row">
+                    <img src="{%static 'img/wallet.jpg' %}" width="300px" height="300px">
+                </div>
+                <div class="container row">
+                    
+                        
+                    <div class="col-lg-4">
+                        <h4>Amount</h4>
+                    </div>
+                    <div class="col-lg-4">
+                        <h4>{{wallet.amount}}</h4>
+                    </div>
+                    <div class="col-lg-4">
+                        <a href="{% url 'bank_auth' %}">
+                            <h5>Visit bank </h5>
+                        </a>
+                    </div>
+                    
+                </div>
+                <div class="container row">
+                    <div class="col-lg-4 wallet-btn">
+                        <a href="{% url 'bank_form' %}">
+                            <button class="btn btn-primary" id="transaction">
+                                {% if user.is_student %}
+                                Add Money
+                                {% else %}
+                                Withdraw
+                                {%endif%}
+                            </button>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 wallet-btn" >
+                        <a href="{%url 'wallet_history' %}">
+                            <button class="btn btn-primary" id="transaction">History</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+{%endblock%}

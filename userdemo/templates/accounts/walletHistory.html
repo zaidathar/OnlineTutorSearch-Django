@@ -1,0 +1,55 @@
+{% extends "pages/base.html" %}
+{% load listindex %}
+{%block content %}
+    <style>
+        .main-container{
+            margin: 30px auto;
+        }
+        .title-text{
+            margin: 10px 30% 30px 30%;
+            color: blue;
+        }
+        .print-btn{
+            margin: 10px 40% 10px 50%;
+            color: white;
+        }
+    </style>
+    <div class="container main-container">
+        <h4 class="title-text">Your wallet transaction history</h4>
+        <div class="container table-container">
+            
+            <table class="table table-hover mx-5 w-100">
+                <thead>
+                    <tr>
+                        <th>Order Details</th>
+                        <th>Transaction Type</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                {% for history in wallet %}
+                
+                <tr>
+                    <td>{{history|listindex:0}}</td>
+                    <td>{{history|listindex:1}}</td>
+                    <td>{{history|listindex:2}}</td>
+                    <td>{{history|listindex:3}}</td>
+                
+                </tr>
+               
+                
+                {%endfor%}
+                </tbody>
+            </table>
+
+        </div>
+        <a href="javascript:window.print()">
+            <button class="btn btn-primary print-btn"  id="print-btn">Print</button>
+        </a>
+        </div>
+    </div>
+    
+    
+{%endblock%}

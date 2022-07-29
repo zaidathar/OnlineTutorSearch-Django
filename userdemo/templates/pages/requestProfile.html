@@ -1,0 +1,116 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+    <style>
+        .profile-pic{
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 50%;
+            margin: 10px 30% 10px 30%;
+        }
+        .center-text{
+            margin: 5px 30% 5px 30%;
+        }
+        .request-text{
+            font-size: 20px;
+            color: darkcyan;
+        }
+        .row-container{
+            margin: 10px;
+        }
+        .btn-container{
+            margin: 20px 30% 20px 30%;
+        }
+        .btn-class{
+            margin: 5px 10px 5px 10px;
+        }
+    </style>
+    <div class="container py-3">
+        <div class="row">
+            <div class="col-lg-7" style="background-color:whitesmoke">
+                <div class="container">
+                    <div class="row row-container">
+                        <div class="col-lg-3">
+                            <h4>Subject</h4>
+                        </div>
+                        <div class="col-lg-9 request-text">
+                            {{order.subject}}
+                        </div>
+                    </div>
+                    <div class="row row-container">
+                        <div class="col-lg-3">
+                            <h4>Date</h4>
+                        </div>
+                        <div class="col-lg-9 request-text">
+                            {{order.apmnt_time}}
+                        </div>
+            
+                    </div>
+                    <div class="row row-container">
+                        <div class="col-lg-3">
+                            <h4>Duration</h4>
+                        </div>
+                        <div class="col-lg-9 request-text">
+                            {{order.duration}} hour
+                        </div>
+                    </div>
+                    <div class="row row-container">
+                        <div class="col-lg-3">
+                            <h4>Amount</h4>
+                        </div>
+                        <div class="col-lg-9 request-text">
+                            ₹ {{order.amount}}
+                        </div>
+                    </div>
+                    <div class="row row-container">
+                        <div class="col-lg-3">
+                            <h4>Message</h4>
+                        </div>
+                        <div class="col-lg-9 request-text">
+                            {{order.message}}
+                        </div>
+                    </div>
+                    <div class="row row-container">
+                       
+                            <div class="container btn-container">
+                                {%if is_tutor %}
+                                <a href="{% url "request_accepted" order.id %}">
+                                    <button class="btn btn-primary btn-class">Accept</button>
+                                </a>
+                                {%endif%}
+                                <a href="{% url 'request_delete' order.id %}">
+                                    <button class="btn btn-danger btn-class">Decline</button>
+                                 </a>
+                            </div>
+                       
+                        <div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-lg-5">
+                <div class="container profile-card-tutor">
+                    <div class="row">
+                        <img src ="{{user_basic.profile_pic.url}}" class="profile-pic">
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <h4 class="center-text">{{user_basic.first_name}} {{user_basic.last_name}}</h4>
+                    </div>
+                    <hr>
+                    <div class="row btn-container">
+                        {% if not is_tutor %}
+                        <a href="{% url 'profile_view' user_basic.username %}">
+                            <button class="btn btn-primary ">Visit Profile</button>
+                        </a>
+                        {%endif%}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+{%endblock%}

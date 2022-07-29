@@ -1,0 +1,60 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+    <style>
+        form{
+            width: 40%;
+            height: 100%;
+            border: 1px solid black;
+            background-color:cornsilk ;
+        }
+        input{
+            width: 60%;
+            margin: 10px 20% 10px 20%;
+        }
+        button{
+            margin: 10px 40% 10px 40%;
+            background-color:violet;
+        }
+        .bank-name{
+            margin: 5px 30% 5px 30%;
+        }
+        .form-container{
+            margin: 10% 30% 10% 30%;
+        }
+        .error-msg{
+            color: red;
+            margin: 10px 30% 10px 30%;            
+        }
+    </style>
+    <div class="container">
+        <div class="container form-container">
+            <form action="{% url 'bank_auth' %}" method="POST">
+                {% csrf_token %}
+                <div class="container error-msg">
+                    <h4>
+                    {{message}}
+
+                    </h4>
+                </div>
+                <div class="container bank-name">
+                    <h3>OTS Bank</h3>
+                </div>
+                <div>
+                    <input class="fname" type="text" name="account" placeholder="Account Number" autocomplete="off" required>
+
+                </div>
+                
+                <div>
+                    <input type="password" name="password" placeholder="Password" autocomplete="off" required>
+
+                </div>
+              
+                <div>
+                    <button type="submit">Submit</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+{%endblock%}

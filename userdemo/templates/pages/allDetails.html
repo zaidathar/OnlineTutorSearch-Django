@@ -1,0 +1,68 @@
+{% extends 'pages/base.html' %}
+{%block content %}
+    <div class="container">
+        <div class="container table-container" style="margin:20px auto;">
+            <div class="container table-content">
+                {% if is_orders %}
+                <table class="table table-hover mx-5 w-100">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Date</th>
+                            <th>Duration</th>
+                            <th>Student</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in orders %}
+                    
+                    {% if order.status == 'pending' %}
+                
+                    <tr>
+                        <td>{{order.subject}}</td>
+                        <td>{{order.apmnt_time}}</td>
+                        <td>{{order.duration}}</td>
+                        
+                        <td>{{order.s_id}}</td>
+                        <!-- <td><a href="#">{{order.username}}</a></td> -->
+                        <td><a href="{% url 'request_profile' order.id %}">
+                            <button class="btn btn-primary">View</button>
+                        </td>
+                    </tr>
+                   
+                    
+                    {%endif%}
+                    {%endfor%}
+                    </tbody>
+                </table>
+                {%else %}
+                <table class="table table-hover mx-5 w-5" >
+                    <thead>
+                        <tr>
+                            <th>Meeting id</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    {% for m in meetings %}
+                        
+                    {% if m.t_status == 'active' and m.s_status == 'active' %}
+                    <tr>
+                        <td>{{m.id}}</td>
+                        <td>{{m.s_status}}</td>
+                        
+                        <td>
+                            <a href="{% url 'meeting_view' m.id %}">
+                            <button class="btn btn-primary">View</button>
+                        </td>
+                    </tr>
+                    {%endif%}
+
+                    {%endfor%}
+                </table>
+                {%endif%}
+            </div>
+        </div>
+    </div>
+{%endblock%}

@@ -1,0 +1,163 @@
+{% extends 'pages/base.html' %}
+
+{%block content %}
+<style>
+   .outer-container{
+      margin: 20px auto;
+   }
+   .label-text{
+      margin: 10px 30% 10px 20%;
+      
+   }
+   .profile-pic img{
+      max-width: 150px;
+      max-height: 150px;
+      border-radius: 50%;
+   }
+   .user-info-name{
+      margin: 10px 0 3px 25%;
+   }
+   .expertise-text{
+      margin: 5px;
+   }
+   .fixed-card{
+      
+   
+      
+   }
+   .contact-card{
+      background-color: aqua;
+      border: 2px;
+      border-radius: 5px;
+      box-shadow: inset;
+      
+   }
+   .top-row{
+      
+      height: 60px;
+   }
+   .top-row h5{
+      margin: 10px 10px 10px 30px;
+      border-bottom: 1px solid blue ;
+   }
+   .msg-for-user{
+      margin: 10px;
+      text-align: center;
+   }
+   .contact-btn{
+      width: 40%;
+      margin: 10px 10px 5px 30%;
+   }
+   .expertise-text{
+      margin: 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+   }
+   
+</style>
+
+<div class="container outer-container">
+    
+   <div class="row">
+        <div class="col-lg-8 mx-auto" >
+           
+           <div class="user-info-name">
+            <h4>{{query_user.first_name}} {{query_user.last_name}}</h4>
+            </div>
+           <div class="row">
+              <div class="col-lg-3 profile-pic" >
+               
+                  <img src="{{query_user.profile_pic.url}}" >
+                 
+              </div>
+              <div class="col-lg-9" >
+                 
+                 <div class="row">
+                  <h4 class="expertise-text">{{details.expertise}}</h4>     
+                 </div>
+            
+               
+              </div>
+           </div>
+           <div>
+            <h3 style="margin: 20px 0 0 0;">About {{query_user.first_name}}</h3>
+
+           </div>
+           <hr>
+           <div class="row">
+               
+               <div class="col-lg-3 field-name">
+                  <h5>Bio</h5>
+               </div>
+               <div class="col-lg-9 field-value">
+                  <p>{{details.bio}}</p>
+               </div>
+            </div>
+            <hr>
+            <div class="row">
+                
+                <div class="col-lg-3 field-name">
+                   <h5>Subject</h5>
+                </div>
+                <div class="col-lg-9 field-value">
+                  <p> 
+                     {%for subject in details.subject%}
+                        {{subject}} 
+                     {%endfor%}
+                  </p>
+                </div>
+             </div>
+             <hr>
+            <div class="row">
+               
+               <div class="col-lg-3 field-name">
+                  <h5>Day Availability</h5>
+               </div>
+               <div class="col-lg-9 field-value">
+                 <p> 
+                    {%for day in details.day_availability%}
+                       {{day}}<br> 
+                    {%endfor%}
+                 </p>
+               </div>
+            </div>
+            <hr>
+            <div class="row">
+               
+               <div class="col-lg-3 field-name">
+               </div>
+               <div class="col-lg-9 field-value">
+               </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mx-auto fixed-card">
+            <div class="container contact-card">
+               <div class="row top-row">
+                  <h5><b>{{query_user.first_name}}</b> charge<strong>
+                      ₹ {{details.rate}}</strong>/hour to teach</h5>
+                </div>
+                <div class="msg-for-user">
+                  <h5>Easy to connect to your tutor</h5>
+                </div>
+                <div class="msg-for-user">
+                   <h5>Get money back if meeting cancelled</h5>
+                </div>
+                <div class="msg-for-user">
+                   <h5>No <strong>subscription</strong> required </h5>
+                </div>
+                <div>
+                   <a href="{% url 'request_view' query_user.username %}">
+                      <button class="btn btn-primary contact-btn">
+                         Contact {{query_user.first_name}}
+                      </button>
+                   </a>
+                </div>
+            </div>
+        </div>
+     </div>
+    
+</div>
+{%endblock%}

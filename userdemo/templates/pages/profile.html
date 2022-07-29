@@ -1,0 +1,173 @@
+{% extends "pages/base.html" %}
+
+{%block content %}
+    <style>
+      
+      .profile-pic{
+        max-width: 200px;
+        max-height: 200px;
+        margin: 10px 20px;
+        border-radius: 50%;
+        text-align:center;  
+      }
+      .attribute-name{
+        margin: 10px 20px 10px 10px ;
+      }
+      .attribute-name2{
+        margin: 20px 40px 20px 10px;
+      }
+      .attribute-field{
+        margin: 10px 0 5px 0;
+        
+      }
+      .input-file{
+        margin: 20px 20px 10px 40px;
+      }
+    </style>
+    {%if user.is_authenticated %}
+    <!-- action="{% url 'profile_update' %}" -->
+    <form id="profile_update_form" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <div class="row mb-5">
+         <div class="col-lg-8 mx-auto">
+            <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+               <div class="row">
+                  <div class="col-lg-8 mx-auto" >
+                     <div class="row">
+                        <div class="col-lg-4" >
+                           <label class="attribute-name">
+                              <h5>First Name</h5>
+                           </label>
+                           <label class="attribute-name" >
+                              <h5>Last Name</h5>
+                           </label>
+                           <label class="attribute-name" >
+                              <h5>Date Of Birth</h5>
+                           </label>
+                           <label class="attribute-name" >
+                              <h5>Gender</h5>
+                           </label>
+                           <label class="attribute-name" >
+                              <h5>Contact</h5>
+                           </label>
+                           {% if request.user.is_tutor %}
+                           <label class="attribute-name" >
+                              <h5>Rate</h5>
+                           </label>
+                           {%endif%}
+                           <label class="attribute-name" >
+                              <h5>Location</h5>
+                           </label>
+                        </div>
+                        <div class="col-lg-8" >
+                           <input type="search" value="{{primary.first_name}}" id="first_name" name="first_name"  aria-describedby="button-addon1" class="form-control border-1 bg-light attribute-field">
+                           <input type="search" value="{{primary.last_name}}" id="last_name" name="last_name"  aria-describedby="button-addon1" class="form-control border-1 bg-light attribute-field">
+                          
+                          
+                           <input type="search" value="{{arrays.Dob}}" id="dob" name="dob"  aria-describedby="button-addon1" class="form-control border-1 bg-light attribute-field">
+                           <input type="search" value="{{secondary.gender}}" id="gender" name="gender"  aria-describedby="button-addon1" class="form-control border-1 bg-light attribute-field">
+                           <input type="search" value="{{secondary.contact}}" id="contact" name="contact"  aria-describedby="button-addon1" class="form-control border-1 bg-light attribute-field">
+                           {% if request.user.is_tutor %}
+                           <input type="search" value="{{secondary.rate}}" id="rate" name="rate"  aria-describedby="button-addon1" class="form-control border-1 bg-light attribute-field">
+                           {%endif%}
+                           <input type="search" value="{{secondary.location}}" id="location" name="location"  aria-describedby="button-addon1" class="form-control border-1 bg-light attribute-field">
+                        </div>
+                     </div>
+                  </div>
+                  
+
+                  <div class="col-lg-4 mx-auto">
+                     <div id="img_div">
+                        <img class="profile-pic" src="{{primary.profile_pic.url}}">
+                     </div>
+                     <div>
+                        <input type="file" class="input-file" id="profile_pic" name="profile_pic">
+                     </div>
+                  </div>
+                 
+               </div>
+               {% if request.user.is_tutor %}
+               <div class="row">
+                  <div class="col-lg-12 mx-auto">
+                     <div class="row">
+                        <div class="col-lg-3" >
+                           <label class="attribute-name2">
+                              <h5>Subject</h5>
+                           </label>
+                           <label class="attribute-name2">
+                              <h5>Day Availability</h5>
+                           </label>
+                           <label class="attribute-name2">
+                              <h5>Expertise</h5>
+                           </label>
+                           <label class="attribute-name2">
+                              <h5>Bio</h5>
+                           </label>
+                        </div>
+                        <div class="col-lg-9" >
+                           <textarea row="5" cols="50" id="subject" name="subject" aria-describedby="button-addon1" class="form-control border-1 bg-light mr-5 attribute-field">{{arrays.subjects}}</textarea>
+                           <textarea row="5" cols="50" id="day_availability" name="day_availability" aria-describedby="button-addon1" class="form-control border-1 bg-light mr-5 attribute-field">{{arrays.days}}</textarea>
+                           <textarea row="5" cols="50" id="expertise" name="expertise" aria-describedby="button-addon1" class="form-control border-1 bg-light mr-5 attribute-field">{{secondary.expertise}}</textarea>
+                           <textarea row="5" cols="50" id="bio" name="bio" aria-describedby="button-addon1" class="form-control border-1 bg-light mr-5 attribute-field">{{secondary.bio}}</textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {%endif%}
+               
+               
+
+               <div class="container my-3 bg-light">
+                  <div class="col-md-12 text-center">
+                     <button type="submit" id="btnSubmit" class="btn btn-primary">Update</button>
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+      </div>
+   </form>
+    {%endif%}
+    <script type="text/javascript">
+      $(document).ready(function () {
+ 
+         $("#btnSubmit").click(function (event) {
+      
+             
+             event.preventDefault();
+      
+            
+            var form = $('#profile_update_form')[0];
+      
+            var data = new FormData(form);
+      
+            $("#btnSubmit").prop("disabled", true);
+         
+            $.ajax({
+   
+                 type: "POST",
+                 enctype: 'multipart/form-data',
+                 url: "{% url 'profile_update'%}",
+                 data: data,
+                 processData: false,
+                 contentType: false,
+                 cache: false,
+                 timeout: 800000,
+         
+                 success: function (json) {
+                  if(!json.error) location.reload(true);
+                 },
+                 error: function (e) {                  
+                     console.log("ERROR : ", e);
+                     $("#btnSubmit").prop("disabled", false);
+      
+                 }
+             });
+      
+         });
+      
+     });
+      
+    </script>
+{%endblock%}

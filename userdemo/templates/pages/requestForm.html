@@ -1,0 +1,120 @@
+{% extends "pages/base.html" %}
+
+{%block content %}
+    <style>
+        .outer-container{
+            margin: 20px auto;
+        }
+        .input-label,.input-field{
+            margin: 10px;
+        }
+        input,textarea{
+            min-width: 70%;
+            
+        }        
+        .center-btn{
+            margin: 20px 50% 20px 50%;
+        }
+        .notice-container{
+            margin: 10px auto;
+            border: 2px;
+        }
+        .profile-pic img{
+
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 50%;
+        }
+    </style>
+    <div class="container outer-container">
+                
+        <div class="row" >
+            
+            <div class="col-lg-7">
+                <div class="container" >
+                    <form action="{% url 'request_view' tutor.username%}" method="POST">
+                        {% csrf_token%}
+                        <div class="row">
+                            <div class="col-lg-2" ">
+                                <div class="input-label">
+                                    <label>Subject</label>
+                                </div>
+                                <div class="input-label">
+                                    <label>Duration</label>
+                                    
+                                </div>
+                                <div class="input-label">
+                                    <label>Date</label>
+                                    
+                                </div>
+                                <div class="input-label">
+                                    <label>Message</label>
+                                    
+                                </div>
+                                    
+                            </div>
+                            <div class="col-lg-7 " >
+                                <div class="input-field">
+                                    <input type="text" name="subject" autocomplete="off" required>
+                
+                                </div>
+                                <div class="input-field">
+                                    <input type="text" name="duration" autocomplete="off" required>
+                
+                                </div>
+                                <div class="input-field">
+                                    <input type="date" name="date" autocomplete="off" required>
+                
+                                </div>
+                                <div class="input-field">
+                                    <textarea rows="3" cols="20" name="message"></textarea>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row" >
+                            <div class="col-lg-5" >
+                                <button type="submit" class="btn btn-primary center-btn">Send</button>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+                
+            </div>
+            <div class="col-lg-5">
+                <div class="container">
+                    <div class="row" style="background-color: aliceblue;">
+                        <div class="col-lg-6 profile-pic">
+                            <img src="{{tutor.profile_pic.url}}">
+                        </div>
+                        <div class="col-lg-6">
+                            <div>
+                                <h5 class="tutor-name"><strong>{{tutor.first_name}} {{tutor.last_name}}</strong></h5>
+                            </div>
+                            <div>
+                                <h6 >Student taught : {{no_students}}</h6>
+                            </div>
+                            <div>
+                                <h6>Hour taught : {{no_hours}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container notice-container">
+                            <h4>Cancel meeting 1 day before date</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="container">
+                {{message}}
+            </div>
+        </div>
+    </div>
+
+
+{%endblock%}

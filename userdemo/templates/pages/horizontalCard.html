@@ -1,0 +1,75 @@
+<!--
+    Image is not loading, I use list method 
+    Refer this
+    https://izziswift.com/reference-list-item-by-index-within-django-template/
+-->
+<style>
+  .profile-card{
+    margin: 0px;
+  }
+  .img-container{
+      
+      width: 100%;
+    }
+    .circle-img{
+      margin: 15px 10px 10px 30px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+    .expertise-text{
+      font-size: 20px;
+      color: blue;
+    }
+    /*.card-text{
+      margin:20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }*/
+</style>
+<section>
+  
+  <div class="container py-3">
+    {% for k,v in userdetail.items %}  
+    <div class="card profile-card">
+          <div class="row ">
+              <div class="col-md-2 p-1" >
+                  <div class="img-container">
+                      <img src="{{v.0.0.profile_pic.url}}" class="circle-img">
+
+                  </div>
+                  <div>
+                      
+                  </div>
+
+              </div>
+              <div class="col-md-6 p-2" >
+                  <div class="card-block px-3">
+                      <h4 class="card-title"><strong>{{v.0.0.first_name}} {{v.0.0.last_name}}</strong></h4>
+                      <p class="card-text">
+                          <h6 class="expertise-text">{{v.1.expertise}}</h6>
+                      </p>
+                      <p class="card-text">
+                          <h6><strong>Subjects:</strong></h6>
+                          {%for i in v.1.subject %} {{i}}, {%endfor%}
+                      </p>
+
+                      <a href="{%url 'profile_view' v.0.0.username %}" class="btn btn-primary">Visit Profile</a>
+                  </div>
+              </div>
+              <div class="card-body col-md-4">
+                  <h5 class="card-title"><i class="fas fa-rupee-sign"></i> {{v.1.rate}}/hours</h5>
+                  <h6><i class="far fa-clock"></i> &nbsp;&nbsp;{{v.1.no_of_hours}} hours tutoring</h6>
+                  <h6><strong><i class="fas fa-user-graduate"></i> &nbsp;&nbsp;{{v.1.students|length}}</strong> students taught</h6>
+                  
+              </div>
+
+          </div>
+    </div>
+    {%endfor%}
+  </div>
+  
+</section>

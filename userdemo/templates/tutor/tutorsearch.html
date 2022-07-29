@@ -1,0 +1,22 @@
+{% extends 'pages/base.html' %}
+{%block content %}
+    <div class="container" style="width: 15%;height:100%;top:0;float:left;background-color:chocolate;margin: 0 10% 0 10%;">
+        <h1>This is for side bar</h1>
+    </div>    
+    <div class="container" style="width:60%;height:100%;margin: 50px 15% 0 25%; background-color:coral;">
+        <div class="container" style="width:98%;margin: 50px 1% 0 1%; background-color:antiquewhite;">
+            <div class="container" style="background-color: chartreuse;">
+                {% include 'pages/inlineform.html'%}
+                <h2>List of Tutor</h2>
+                <div class="container" style="background-color: aqua; height: 200px;width:100%;margin: 10px 0 0 0;">
+                    {% for i in "123456789" %}
+                        <h2>Tutor {{i}}</h2>
+                    {%endfor%}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+{%endblock%}

@@ -1,0 +1,35 @@
+{% extends "pages/base.html" %} {%block content %} {%if user.is_authenticated %}
+<div class="row mb-5">
+    <div class="col-lg-8 mx-auto">
+        <h5 class="font-weight-light mb-4 font-italic text-white"></h5>
+        <div class="bg-white p-5 rounded shadow">
+
+            <form action="{% url 'tutor_match' %}" method="POST">
+                {% csrf_token %}
+                <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+                    <div class="input-group">
+                        <input type="search" id="subject" name="subject" placeholder="Enter Subject" aria-describedby="button-addon1" class="form-control border-1 bg-light mr-5" required>
+                        <input type="search" id="location" name="location" placeholder="Enter Location" aria-describedby="button-addon1" class="form-control border-1 bg-light" required>
+                        <div class="input-group-append">
+                            <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+            <div>
+                {% if after.visited %}
+                <h4>{{tutors|length}} Results found for <strong>{{subject}} </strong></h4>
+                {%endif%}
+            </div>
+            
+            <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+
+                {% include 'pages/horizontalCard.html'%}
+
+            </div>
+            
+        </div>
+    </div>
+</div>
+{%endif%} {%endblock%}
